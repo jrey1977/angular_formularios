@@ -1,6 +1,6 @@
 <h4>Formularios <small> por template </small></h4>
 <hr>
-<form autocomplete="off">
+<form autocomplete="off" (ngSubmit)="guardar(miForm)" #miForm="ngForm">
 
   <div>
 
@@ -10,7 +10,14 @@
 
         <input class="form-control"
                type="text"
-               placeholder="Nombre">
+               name="nombre"
+               [class.is-invalid]="!inputNombre.valid && inputNombre.touched"
+               [ngModel]="usuario.nombre"
+               required 
+               minlength="2" 
+               placeholder="Nombre"
+               #inputNombre="ngModel">
+        <small class="form-text text-danger" *ngIf="!inputNombre.valid && inputNombre.touched">Ingrese 5 letras</small>
       </div>
     </div>
 
@@ -20,7 +27,14 @@
 
         <input class="form-control"
                type="text"
-               placeholder="Apellido">
+               name="apellido"
+               [class.is-invalid]="!inputApellido.valid && inputApellido.touched"
+               [ngModel]="usuario.apellido"
+               required 
+               minlength="2" 
+               placeholder="Apellido"
+               #inputApellido="ngModel">
+               <small class="form-text text-danger" *ngIf="!inputApellido.valid && inputApellido.touched">Ingrese 5 letras</small>
       </div>
     </div>
 
@@ -32,7 +46,15 @@
 
       <input class="form-control"
              type="email"
-             placeholder="Correo electrónico">
+             placeholder="Correo electrónico"
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+             [class.is-invalid]="!inputEmail.valid && inputEmail.touched"
+             [ngModel]="usuario.email"
+             required 
+             minlength="2" 
+             name="email" 
+             #inputEmail="ngModel">
+             <small class="form-text text-danger" *ngIf="!inputEmail.valid && inputEmail.touched">Ingrese un correo válido</small>
     </div>
   </div>
 
