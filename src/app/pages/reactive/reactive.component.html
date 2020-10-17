@@ -1,46 +1,80 @@
 <h4>Formularios <small> reactivos </small></h4>
 <hr>
-<form autocomplete="off">
-
-  <div>
+<form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardar()">
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Nombre</label>
-      <div class="col-8">
+      <div class="col">
 
         <input class="form-control"
                type="text"
-               placeholder="Nombre">
+               placeholder="Nombre"
+               formControlName="nombre"
+               [class.is-invalid]="this.inputNoValido('nombre')">
+        <small class="text-danger" *ngIf="this.inputNoValido('nombre')">Ingrese al menos 3 letras</small>
       </div>
     </div>
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Apellido</label>
-      <div class="col-8">
+      <div class="col">
 
         <input class="form-control"
                type="text"
-               placeholder="Apellido">
+               placeholder="Apellido"
+               formControlName="apellido"
+               [class.is-invalid]="this.inputNoValido('apellido')">
+        <small class="text-danger" *ngIf="this.inputNoValido('apellido')">Ingrese al menos 3 letras</small>
       </div>
     </div>
 
-  </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Correo</label>
+      <div class="col">
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Correo</label>
-    <div class="col-8">
-
-      <input class="form-control"
-             type="email"
-             placeholder="Correo electrónico">
+        <input class="form-control"
+              type="email"
+              placeholder="Correo electrónico"
+              formControlName="correo"
+              [class.is-invalid]="this.inputNoValido('correo')">
+        <small class="text-danger" *ngIf="this.inputNoValido('correo')">Formato de correo no válido</small>
+      </div>
     </div>
-  </div>
 
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Provincia</label>
+     
+      <div class="col">
+        <select 
+          name="provincias"
+          formControlName="provincia"
+          class="form-control" 
+          (change) = "eligoProvincia()"
+          [class.is-invalid]="this.inputNoValido('provincia')"
+        >
+        <option *ngFor="let miProvincia of arrayProvincias" [value]="miProvincia.codigo">{{miProvincia.nombre}}</option>
+      </select>
+        <div>{{provinciaSeleccionada}}</div>
+        <small class="text-danger" *ngIf="this.inputNoValido('provincia')">Seleccione una provincia</small>
+      </div>
+
+      <div class="col">
+        <select 
+          name="municipio"
+          formControlName="municipio"
+          class="form-control"
+          [class.is-invalid]="this.inputNoValido('municipio')"
+        >
+        <option *ngFor="let miMunicipio of arrayMunicipios" [value]="miMunicipio.codigo">{{miMunicipio.nombre}}</option>
+      </select>
+        <!-- <small class="text-danger" *ngIf="this.inputNoValido('municipio')">Seleccione un municipio</small> -->
+      </div>
+    </div>
 
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
-    <div class="input-group col-md-8">
+    <div class="input-group col">
       <button type="submit" class="btn btn-outline-primary btn-block">
         Guardar
       </button>
@@ -48,3 +82,13 @@
   </div>
 
 </form>
+
+<hr>
+<!-- <pre>
+  Estado del formulario: {{formulario.valid}}
+  <br>
+  Status: {{formulario.status}}
+  <pre>
+    {{ formulario.value | json }}
+  </pre>
+</pre> -->

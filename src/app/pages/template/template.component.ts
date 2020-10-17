@@ -12,19 +12,26 @@ export class TemplateComponent implements OnInit {
   usuario = {
     nombre: 'Javier',
     apellido: 'Rey',
-    email: 'jrey@jrey.es'
+    email: 'jrey@jrey.es',
+    pais: '',
+    genero: ''
   }
+
+  arrayPaises: any[] = [];
 
   constructor( private paises: PaisService ) { }
 
   ngOnInit(): void {
     this.paises.getPaises().subscribe( datos => {
-        console.log(datos);
+        this.arrayPaises = datos;
+        this.arrayPaises.unshift({
+          nombre: '[Seleccione País]',
+          codigo: ''
+        })
     });
   }
 
   guardar(miForm: NgForm){
-    console.log('Enviado');
     console.log(miForm.value);
     if(miForm.invalid){
       Object.values(miForm.controls).forEach( control => {
