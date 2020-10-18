@@ -33,7 +33,8 @@ export class PaisService {
       );
   }
 
-  getMunicipios(cpro){
+  getMunicipios(cpro:string){
+    console.log('recibo provincia: '+cpro);
     return this.http.get('https://apiv1.geoapi.es/municipios?CPRO='+cpro+'&type=JSON&key=a6d0ebdf5830ea26b4d543617719f45cc1bb2fe7655d9abdcc6cd5fb1e561efd&sandbox=0')
     .pipe( 
       map(
